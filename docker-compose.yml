@@ -1,0 +1,49 @@
+version: '3'
+services:
+
+  ###### kibana #####
+  kibana:
+    image: docker.elastic.co/kibana/kibana:6.6.2
+    restart: always
+    ports:
+      - "5601:5601"
+    networks:
+      - elknet
+
+  ###### elasticsearch #####
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.6.2
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    restart: always
+    networks:
+      - elknet
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 20000
+        hard: 80000
+
+  logstath:
+    image: docker.elastic.co/logstash/logstash:6.6.2
+    restart: always
+    networks:
+      - elknet
+    ports:
+      - "5044:5044"
+
+  filebeats:
+    image: docker.elastic.co/beats/filebeat:6.6.2
+    user: root
+    restart: always
+    networks:
+      - elknet
+    volumes:
+      - ./filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+networks:
+  elknet:
+
