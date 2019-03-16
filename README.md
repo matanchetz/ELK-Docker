@@ -1,10 +1,19 @@
-# ELK-Docker
+
+# ELK - docker
+
+Quick start for ELK stack on one machine
+
+### Prerequisites
+
+- Docker installed 
+- Docker-compose installed
+
+### Installing
+
+1. Git clone project 
+2. Run docker-compose up
 
 
-git clone repo
-run docker-compose up 
-This will start filebeats connect to elasticsearch and kibana
 
-#still need to be done 
-Connect filebeat to logstash
-seperate filebeat and rest of stack to diferrent docker-compose files
+
+
